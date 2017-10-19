@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <link rel="icon" type="image/png" href="{{ url_for('static',filename='images/icon.png') }}" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css" />
+      <style>
+          html,body{
+              height: 100%;
+              padding: 0;
+              margin: 0;
+          }
+      </style>
+    <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+  </head>
+  <body>
+
+    <div id="content" style="min-height:800px;width: 100%;">{% block content %}{% endblock %}</div>
+    <div id="footer" style="text-align: center;background-color: #3c3c3c;padding: 60px;color:grey">
+      {% block footer %}
+      &copy; Copyright 2017
+      {% endblock %}
+    </div>
+
+    {% block js %}
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.ajaxupload.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/sprintf.min.js') }}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    {% endblock %}
+  </body>
+</html>

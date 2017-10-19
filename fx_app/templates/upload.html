@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block title %}Upload{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+<div style="padding: 30px;text-align: center;width: 600px;margin-left: auto;margin-right: auto">
+    <p style="background-color: lightblue;padding: 30px;line-height: 28px;font-size: 14px">
+        功能说明，啊哈哈哈，这里是功能说明
+    </p>
+    <div style="text-align:center;padding:20px;border:1px dashed #909090;" id="promptzone">
+        click to upload
+    </div>
+    <div id="progressbar"></div>
+	<div id="result"></div>
+</div>
+{% endblock %}
+{% block js %}
+{{ super() }}
+<script>
+    jQuery(function ($) {
+	$.ajaxUploadSettings.name = 'file';
+
+	$('#promptzone').ajaxUploadPrompt({
+		url : 'upload',
+		beforeSend : function () {
+			$('#promptzone, #result').hide();
+		},
+		onprogress : function (e) {
+			if (e.lengthComputable) {
+				var percentComplete = e.loaded / e.total;
+				// Show in progressbar
+				$( "#progressbar" ).progressbar({
+					value: percentComplete*100,
+					complete: function () {
+						$(this).progressbar( "destroy" );
+						$("#result").show()
+
+						$("#result").text("上传成功，数据处理中...")
+					}
+				});
+			}
+		},
+		error : function () {
+		},
+		success : function (data) {
+            console.log(data);
+            $("#result").empty();
+            $("#result").text("处理完成");
+            if(data.ok == 0){
+                draw_table(data.obj)
+            }
+
+		}
+	});
+});
+function draw_table(arr) {
+    var table = "<table class='table table-condensed'>" +
+        "<thead>" +
+        "<tr><th  style='text-align: center'>UserId</th>" +
+        "<th  style='text-align: center'>Type</th>" +
+        "<th  style='text-align: center'>Commission</th>" +
+        "<th  style='text-align: center'>Volumes</th></tr>" +
+        "</thead>" +
+        "<tbody>%s</tbody>" +
+        "</table>";
+    var rows = "";
+    for(var i in arr){
+        var r = "<tr>" +
+            "<td>%s</td>" +
+            "<td>%s</td>" +
+            "<td>%s</td>" +
+            "<td>%s</td>" +
+            "</tr>";
+        rows = rows + sprintf(r,i,"Total", arr[i].commission, arr[i].volumes);
+        var group = arr[i].group;
+        var sub_table = "";
+        for(var key in group){
+            sub_table = sub_table + sprintf(r,i,key,group[key]["commission"],group[key]["volume"]);
+        }
+        var sub = "<tr><td colspan='4'><table class='table table-bordered'><tbody>%s</tbody></table></td></tr>";
+        rows = rows + sprintf(sub,sub_table);
+    }
+    $("#result").append(sprintf(table,rows));
+}
+</script>
+{% endblock %}
