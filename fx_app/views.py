@@ -35,9 +35,13 @@ def allow_cross_domain(fun):
 @app.route('/api/hotel/parse', methods=['POST'])
 def hotel_parse():
     print "hotel_parse"
-    data = request.values.to_dict().keys()[0]
-    data = json.loads(data)
-    url = data.get("url")
+    # data = request.values.to_dict().keys()[0]
+    # data = json.loads(data)
+    # url = data.get("url")
+    data = request.json
+    print data
+    url = data["url"]
+    print url
     if not url:
         return jsonify({
             "ok": 1,
