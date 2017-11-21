@@ -51,28 +51,19 @@ def hotel_parse():
             "msg": "ok",
             "obj": ans
         })
-    # elif url.find("Chain=16840") > -1:
-    #     ans = parse_aman(url)
-    #     return jsonify({
-    #         "ok": 0,
-    #         "msg": "ok",
-    #         "obj": ans
-    #     })
 
 
-
-@app.route('/send')
-def send_message():
-    print "send message starts"
-    sse.publish({"message": "Hello!"}, type='greeting')
-    print "send message end"
-    return "Message sent!"
-
-
+# @app.route('/send')
+# def send_message():
+#     print "send message starts"
+#     sse.publish({"message": "Hello!"}, type='greeting')
+#     print "send message end"
+#     return "Message sent!"
+#
+#
 @app.route("/")
 def index():
     return render_template("index.html",name="index")
-
 
 @app.route("/hello")
 def test():
