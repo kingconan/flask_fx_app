@@ -74,6 +74,11 @@ def index():
     return render_template("index.html",name="index")
 
 
+@app.route("/hello")
+def test():
+    return "Hello Flask!"
+
+
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
     print "in upload"
