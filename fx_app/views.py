@@ -31,8 +31,8 @@ def allow_cross_domain(fun):
     return wrapper_fun
 
 
+# @allow_cross_domain
 @app.route('/api/hotel/parse', methods=['POST'])
-@allow_cross_domain
 def hotel_parse():
     print "hotel_parse"
     data = request.values.to_dict().keys()[0]
