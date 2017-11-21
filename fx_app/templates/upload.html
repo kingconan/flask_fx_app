@@ -84,4 +84,34 @@ function draw_table(arr) {
     $("#result").append(sprintf(table,rows));
 }
 </script>
+<script>
+    var stream_url = "{{ url_for('sse.stream')}}";
+    console.log(stream_url);
+    if(!!window.EventSource){
+        console.log("has event source")
+
+{#        var source = new EventSource(stream_url);#}
+{#        source.addEventListener('message', function(e) {#}
+{#          console.log(e.data);#}
+{#        }, false);#}
+{##}
+{#        source.addEventListener('open', function(e) {#}
+{#          // Connection was opened.#}
+{#            console.log("open")#}
+{#        }, false);#}
+{##}
+{#        source.addEventListener('error', function(e) {#}
+{#            console.log("error")#}
+{#            console.log(e)#}
+{#          if (e.readyState == EventSource.CLOSED) {#}
+{##}
+{#          }#}
+{#        }, false);#}
+    }
+    else{
+
+        console.log("no event source")
+    }
+
+</script>
 {% endblock %}

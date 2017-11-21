@@ -4,7 +4,7 @@
     {% block head %}
     <link rel="icon" type="image/png" href="{{ url_for('static',filename='images/icon.png') }}" />
     <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/jquery-ui.css') }}" />
       <style>
           html,body{
               height: 100%;
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.ajaxupload.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static',filename='js/sprintf.min.js') }}"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery-ui.min.js') }}"></script>
     {% endblock %}
   </body>
 </html>
