@@ -9,7 +9,7 @@ from flask_sse import sse
 from . import app
 from excel_task import parse_fx_excel
 from hotel_task import parse_booking
-from hotel_task import parse_aman
+from hotel_task import parse_leading
 
 from functools import wraps
 from flask import make_response
@@ -50,6 +50,13 @@ def hotel_parse():
         })
     if url.find("booking.com") > -1:
         ans = parse_booking(url)
+        return jsonify({
+            "ok": 0,
+            "msg": "ok",
+            "obj": ans
+        })
+    elif url.find("lhw.cn") > -1:
+        ans = parse_leading(url)
         return jsonify({
             "ok": 0,
             "msg": "ok",
