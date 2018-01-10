@@ -74,7 +74,13 @@ def hotel_parse():
 #
 @app.route("/")
 def index():
-    return render_template("index.html",name="index")
+    return render_template("index.html", name="index")
+
+
+@app.route("/coin")
+def coin():
+    return render_template("coins.html", name="coins")
+
 
 @app.route("/hello")
 def test():

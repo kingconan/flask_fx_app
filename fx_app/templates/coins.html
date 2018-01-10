@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Coinmarketcap Index</title>
+  <style>
+      [v-cloak] {
+            display: none;
+        }
+      tr:hover{
+          background-color: black;
+          color: whitesmoke;
+      }
+  </style>
+</head>
+<body style="text-align: center">
+  <div id="content" v-cloak>
+        <div></div>
+        <div style="font-size: 16px;">
+            <table>
+                <thead>
+                    <td style="width: 220px;padding: 6px">Name</td>
+                    <td style="width: 120px;padding: 6px">USD</td>
+                    <td style="width: 120px;padding: 6px">Last Updated</td>
+                </thead>
+                <tbody>
+                    <tr v-for="item in items">
+                        <td style="width: 220px;padding: 6px"><%item.name%></td>
+                        <td style="width: 120px;padding: 6px"><%item.price_usd%></td>
+                        <td style="width: 120px;padding: 6px;font-size: 10px;color: grey"><%time_convert(item.last_updated)%></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+  </div>
+  <script type="text/javascript" src="{{ url_for('static',filename='js/vue.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static',filename='js/vue-router.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static',filename='js/axios.min.js') }}"></script>
+  <script>
+    var router = new VueRouter({
+        mode: 'history',
+        routes: []
+    });
+    var content = new Vue({
+        el: '#content',
+        delimiters: ["<%","%>"],
+        data:{
+            items : [
+            ]
+        },
+        created : function(){
+            console.log("created");
+            const thiz = this;
+            axios.get("https://api.coinmarketcap.com/v1/ticker/")
+                .then(function(response){
+                    console.log(response);
+                    thiz.items = response.data;
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+        },
+        updated : function(){
+
+        },
+        methods : {
+            time_convert : function(UNIX_timestamp){
+                  var a = new Date(UNIX_timestamp * 1000);
+                  var year = a.getFullYear();
+                  var month = a.getMonth() + 1;
+                  var date = a.getDate();
+                  var hour = a.getHours();
+                  var min = a.getMinutes();
+                  var sec = a.getSeconds();
+                  var time = year + '.'
+                      + this.add_zero_padding(month) + '.'
+                      + this.add_zero_padding(date) + ' '
+                      + this.add_zero_padding(hour) + ':'
+                      + this.add_zero_padding(min) + ':'
+                      + this.add_zero_padding(sec) ;
+                  return time;
+            },
+            add_zero_padding : function (number) {
+                return number < 10 ? "0"+number : number;
+            }
+        },
+        computed:{
+        }
+    });
+
+  </script>
+</body>
+</html>
